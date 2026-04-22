@@ -1,26 +1,69 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ===== Bastia Bold — display/heading font ===== */
+@font-face {
+  font-family: "Bastia Bold";
+  src: url("/fonts/Bastia-Bold-Regular.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ===== DM Sans — body/UI secondary font ===== */
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DMSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DMSans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===== Theme tokens ===== */
+@theme {
+  --color-lavender-light: #e8e2f4;
+  --color-lavender-mid: #c9b9d6;
+  --color-lavender-dark: #b5a1c7;
+  --color-purple-deep: #4b388f;
+  --color-orange: #ef5d34;
+  --color-cream: #faf8fc;
+  --color-white: #ffffff;
+
+  --font-display: "Bastia Bold", Georgia, "Times New Roman", serif;
+  --font-body: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* ===== Base styles — MUST be inside @layer base to not override Tailwind utilities ===== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-lavender-mid);
+    color: var(--color-purple-deep);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-lavender-dark);
+    opacity: 1;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+  }
 }
