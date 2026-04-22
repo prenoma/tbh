@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tbh.com"),
-  title: "tbh — Something Cool is Coming",
+  title: "tbh",
   description:
     "Join the waitlist for tbh, a modern women's clothing brand. Be the first to get exclusive offers when we launch.",
   keywords: [
@@ -37,12 +37,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://tbh.com",
     siteName: "tbh",
+    images: [
+      {
+        url: "/tbh.png",
+        width: 1200,
+        height: 630,
+        alt: "tbh — Modern Women's Clothing Brand",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "tbh — Something Cool is Coming",
     description:
       "Join the waitlist for tbh. Be the first to get exclusive offers when we launch.",
+    images: ["/tbh.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -59,6 +68,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

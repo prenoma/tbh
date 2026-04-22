@@ -9,8 +9,20 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [watermarkFontSize, setWatermarkFontSize] = useState("64px");
+  const [isDesktop, setIsDesktop] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Set isDesktop only on client side to avoid hydration mismatch
+    setIsDesktop(window.innerWidth >= 1024);
+    
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (!loading && mainRef.current) {
@@ -29,13 +41,6 @@ export default function Home() {
     }
   }, [loading]);
 
-  // Handle responsive watermark sizing — use viewport width units
-  useEffect(() => {
-    // Use vw (viewport width) so it scales proportionally across all screen sizes
-    // 10vw is larger, more visible across mobile, tablet, and desktop
-    setWatermarkFontSize("10vw");
-  }, []);
-
   return (
     <>
       {loading && <Loader onComplete={() => setLoading(false)} />}
@@ -48,19 +53,20 @@ export default function Home() {
           backgroundColor: "#C9B9D6",
         }}
       >
-        {/* Watermark background pattern — FIXED so it stays static, desktop only */}
-        {typeof window !== "undefined" && window.innerWidth >= 1024 && (
+        {/* Watermark background pattern — desktop only */}
+        {isDesktop && (
         <div
-          className="fixed inset-0 pointer-events-none overflow-hidden"
+          className="absolute inset-0 pointer-events-none overflow-hidden"
           style={{
             fontFamily: '"Bastia Bold", Georgia, serif',
+            fontSize: "72px",
+            fontWeight: 700,
             display: "flex",
             justifyContent: "center",
-            zIndex: 0,
           }}
         >
           <div style={{ position: "relative", width: "100%", maxWidth: "calc(100% - 100px)" }}>
-            {/* "tbh" pattern — alternating rows, desktop only */}
+            {/* "tbh" pattern — alternating rows */}
             {Array.from({ length: 36 }).map((_, i) => {
               const row = Math.floor(i / 4);
               const col = i % 4;
@@ -68,19 +74,17 @@ export default function Home() {
               const isOddRow = row % 2 === 1;
               const leftOffset = isOddRow ? 12.5 : 0;
               
-              const rowSpacing = 14;
-              
               return (
                 <div
                   key={i}
                   style={{
                     position: "absolute",
                     fontFamily: '"Bastia Bold", Georgia, serif',
-                    fontSize: watermarkFontSize,
+                    fontSize: "64px",
                     fontWeight: 700,
                     color: "rgba(255, 255, 255, 0.12)",
                     left: `${leftOffset + col * 25}%`,
-                    top: `${row * rowSpacing}%`,
+                    top: `${row * 14}%`,
                     whiteSpace: "nowrap",
                   }}
                 >
