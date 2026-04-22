@@ -97,9 +97,9 @@ export default function Home() {
         )}
 
         {/* Main content — vertical stack */}
-        <div className="flex-1 flex flex-col items-center justify-center gap-2 px-6 py-6 relative z-10">
+        <div className="flex-1 min-h-0 flex flex-col items-center justify-center gap-1 px-6 py-3 relative z-10">
           <Hero />
-          <div className="w-full max-w-md my-3" style={{ borderBottom: "1px solid rgba(75, 56, 143, 0.2)" }} />
+          <div className="w-full max-w-md my-1" style={{ borderBottom: "1px solid rgba(75, 56, 143, 0.2)" }} />
           <WaitlistForm />
         </div>
 

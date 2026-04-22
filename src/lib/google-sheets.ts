@@ -5,7 +5,7 @@ const SHEET_ID = process.env.GOOGLE_SHEET_ID;
 const SERVICE_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 
-type SheetRow = [string, string, string, string, string];
+type SheetRow = [string, string, string, string, string, string];
 
 let sheets: ReturnType<typeof google.sheets> | null = null;
 
@@ -27,6 +27,7 @@ function getClient() {
 }
 
 export async function appendRow(data: {
+  name: string;
   email: string;
   phone: string;
   address: string;
@@ -42,9 +43,10 @@ export async function appendRow(data: {
     return { success: false, error: "Google Sheets not configured" };
   }
 
-  const timestamp = new Date().toISOString();
+  const timestamp = new Date().toISOString().slice(0, 19).replace("T", " ");
   const row: SheetRow = [
     timestamp,
+    data.name,
     data.email,
     data.phone,
     data.address,
@@ -54,7 +56,7 @@ export async function appendRow(data: {
   try {
     const response = await client.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
-      range: "Sheet1!A:E",
+      range: "waitlist!A1",
       valueInputOption: "USER_ENTERED",
       insertDataOption: "INSERT_ROWS",
       requestBody: {

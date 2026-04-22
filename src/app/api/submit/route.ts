@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { appendRow } from "@/lib/google-sheets";
 
 interface SubmitRequest {
+  name?: string;
   email: string;
   phone?: string;
   address?: string;
@@ -34,6 +35,7 @@ function sanitize(str: string): string {
 }
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+const MAX_NAME_LEN = 100;
 const MAX_EMAIL_LEN = 254;
 const MAX_PHONE_LEN = 20;
 const MAX_ADDRESS_LEN = 500;
@@ -71,12 +73,27 @@ export async function POST(request: NextRequest) {
     }
 
     // Sanitize all inputs
+    const name = sanitize(body.name || "");
     const email = sanitize(body.email || "").toLowerCase();
     const phone = sanitize(body.phone || "");
     const address = sanitize(body.address || "");
     const comments = sanitize(body.comments || "");
 
     // Validation
+    if (!name) {
+      return NextResponse.json(
+        { success: false, error: "Name is required" },
+        { status: 400 }
+      );
+    }
+
+    if (name.length > MAX_NAME_LEN) {
+      return NextResponse.json(
+        { success: false, error: "Name is too long" },
+        { status: 400 }
+      );
+    }
+
     if (!email) {
       return NextResponse.json(
         { success: false, error: "Valid email is required" },
@@ -98,7 +115,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (phone.length > MAX_PHONE_LEN || !/^\+?[0-9\s\-()]{6,}$/.test(phone)) {
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (phoneDigits.length < 8 || phoneDigits.length > 15) {
       return NextResponse.json(
         { success: false, error: "Valid phone number is required" },
         { status: 400 }
@@ -130,6 +148,7 @@ export async function POST(request: NextRequest) {
     console.log("New waitlist submission:", {
       timestamp: new Date().toISOString(),
       ip,
+      name,
       email,
       phone,
       address,
@@ -138,6 +157,7 @@ export async function POST(request: NextRequest) {
 
     // Append to Google Sheets (graceful fallback if not configured)
     const sheetsResult = await appendRow({
+      name,
       email,
       phone,
       address,

@@ -1,9 +1,9 @@
 export default function Hero() {
   return (
-    <div className="reveal-item flex flex-col items-center text-center max-w-2xl py-1">
+    <div className="reveal-item flex flex-col items-center text-center max-w-2xl py-0">
       {/* Headline */}
       <h1
-        className="text-5xl sm:text-6xl md:text-7xl lg:text-7xl mb-2"
+        className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl mb-1"
         style={{
           fontFamily: '"Bastia Bold", Georgia, serif',
           fontWeight: 700,

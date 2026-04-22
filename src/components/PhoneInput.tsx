@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 
 interface PhoneInputProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, isComplete: boolean) => void;
   borderColor: string;
   bgColor: string;
 }
@@ -37,15 +37,15 @@ export default function PhoneInput({
     const newId = e.target.value;
     const newCountry = countries.find((c) => c.id === newId);
     setSelectedId(newId);
-    if (phoneNumber && newCountry) {
-      onChange(`${newCountry.code}${phoneNumber}`);
+    if (newCountry) {
+      const digits = phoneNumber;
+      onChange(`${newCountry.code}${digits}`, digits.length === newCountry.maxLen);
     }
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Only allow digits
     const digitsOnly = e.target.value.replace(/\D/g, "");
-    onChange(`${selected.code}${digitsOnly}`);
+    onChange(`${selected.code}${digitsOnly}`, digitsOnly.length === selected.maxLen);
   };
 
   const font = '"DM Sans", sans-serif';
