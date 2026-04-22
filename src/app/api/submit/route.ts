@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { appendRow } from "@/lib/google-sheets";
 
 interface SubmitRequest {
   email: string;
@@ -135,7 +136,18 @@ export async function POST(request: NextRequest) {
       comments: comments || "N/A",
     });
 
-    // TODO: Integrate Google Sheets API here when credentials are available
+    // Append to Google Sheets (graceful fallback if not configured)
+    const sheetsResult = await appendRow({
+      email,
+      phone,
+      address,
+      comments,
+    });
+
+    if (!sheetsResult.success) {
+      console.warn(`[API] Sheets write failed: ${sheetsResult.error}`);
+      // Don't fail the response — form submission succeeds even if Sheets write fails
+    }
 
     return NextResponse.json(
       { success: true, message: "You're on the list!" },
