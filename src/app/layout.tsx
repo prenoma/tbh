@@ -37,24 +37,17 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://tbh.com",
     siteName: "tbh",
-    images: [
-      {
-        url: "/tbh.png",
-        width: 1200,
-        height: 630,
-        alt: "tbh — Modern Women's Clothing Brand",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "tbh — Something Cool is Coming",
     description:
       "Join the waitlist for tbh. Be the first to get exclusive offers when we launch.",
-    images: ["/tbh.png"],
   },
   icons: {
-    icon: "/tbh.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -66,6 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="manifest" href="/site.webmanifest" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
