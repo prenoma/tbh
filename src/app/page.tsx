@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [watermarkFontSize, setWatermarkFontSize] = useState("64px");
   const mainRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,6 +29,13 @@ export default function Home() {
     }
   }, [loading]);
 
+  // Handle responsive watermark sizing — use viewport width units
+  useEffect(() => {
+    // Use vw (viewport width) so it scales proportionally across all screen sizes
+    // 10vw is larger, more visible across mobile, tablet, and desktop
+    setWatermarkFontSize("10vw");
+  }, []);
+
   return (
     <>
       {loading && <Loader onComplete={() => setLoading(false)} />}
@@ -40,36 +48,39 @@ export default function Home() {
           backgroundColor: "#C9B9D6",
         }}
       >
-        {/* Watermark background pattern */}
+        {/* Watermark background pattern — FIXED so it stays static, desktop only */}
+        {typeof window !== "undefined" && window.innerWidth >= 1024 && (
         <div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
+          className="fixed inset-0 pointer-events-none overflow-hidden"
           style={{
             fontFamily: '"Bastia Bold", Georgia, serif',
-            fontSize: "72px",
-            fontWeight: 700,
             display: "flex",
             justifyContent: "center",
+            zIndex: 0,
           }}
         >
           <div style={{ position: "relative", width: "100%", maxWidth: "calc(100% - 100px)" }}>
-            {/* "tbh" pattern — alternating rows */}
+            {/* "tbh" pattern — alternating rows, desktop only */}
             {Array.from({ length: 36 }).map((_, i) => {
               const row = Math.floor(i / 4);
               const col = i % 4;
               // Odd rows (1, 3, 5...) offset to the right
               const isOddRow = row % 2 === 1;
               const leftOffset = isOddRow ? 12.5 : 0;
+              
+              const rowSpacing = 14;
+              
               return (
                 <div
                   key={i}
                   style={{
                     position: "absolute",
                     fontFamily: '"Bastia Bold", Georgia, serif',
-                    fontSize: "64px",
+                    fontSize: watermarkFontSize,
                     fontWeight: 700,
                     color: "rgba(255, 255, 255, 0.12)",
                     left: `${leftOffset + col * 25}%`,
-                    top: `${row * 14}%`,
+                    top: `${row * rowSpacing}%`,
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -79,6 +90,7 @@ export default function Home() {
             })}
           </div>
         </div>
+        )}
 
         {/* Main content — vertical stack */}
         <div className="flex-1 flex flex-col items-center justify-center gap-2 px-6 py-6 relative z-10">

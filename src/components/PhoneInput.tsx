@@ -56,7 +56,7 @@ export default function PhoneInput({
         value={selectedId}
         onChange={handleCountryChange}
         aria-label="Country code"
-        className="flex-shrink-0 w-[100px] px-2.5 py-2 border-b-2 border-t-0 border-l-0 border-r-0 text-sm transition-all"
+        className="flex-shrink-0 px-2.5 py-2 border-b-2 border-t-0 border-l-0 border-r-0 text-sm transition-all"
         style={{
           borderColor: borderColor,
           backgroundColor: bgColor,
@@ -68,6 +68,7 @@ export default function PhoneInput({
           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%234B388F' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")`,
           backgroundRepeat: "no-repeat",
           backgroundPosition: "right 8px center",
+          minWidth: "max-content",
         }}
       >
         {countries.map((country) => (
