@@ -22,39 +22,16 @@ export default function Home() {
           backgroundColor: "#fbefe1",
         }}
       >
-        {/* ── HEADER ── */}
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            flexShrink: 0,
-            height: "clamp(64px, 11vh, 118px)",
-          }}
-        >
+        {/* ── HEADER ── solid bar + scallop SVG below, no cropping ── */}
+        <div style={{ flexShrink: 0, width: "100%" }}>
+          {/* Solid lavender bar with logo */}
           <div
             style={{
-              position: "absolute",
-              top: 0, bottom: 0,
-              left: "-7px", right: "-7px",
-              overflow: "hidden",
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/header-art.svg"
-              alt=""
-              aria-hidden="true"
-              style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }}
-            />
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
+              backgroundColor: "#c9b9d6",
+              height: "clamp(60px, 8vh, 96px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              paddingBottom: "clamp(12px, 2.5vh, 28px)",
             }}
           >
             <Image
@@ -63,9 +40,23 @@ export default function Home() {
               width={97}
               height={68}
               priority
-              style={{ objectFit: "contain", width: "clamp(52px, 6.5vw, 100px)", height: "auto" }}
+              style={{ objectFit: "contain", width: "clamp(56px, 6.5vw, 97px)", height: "auto" }}
             />
           </div>
+
+          {/* Scallop border — full natural width/height, ZERO cropping */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/assets/header-art.svg"
+            alt=""
+            aria-hidden="true"
+            style={{
+              display: "block",
+              width: "calc(100% + 14px)",
+              height: "auto",
+              marginLeft: "-7px",  /* -7px offset to center a gap arch */
+            }}
+          />
         </div>
 
         {/* ── CREAM SECTION ── */}
