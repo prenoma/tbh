@@ -21,23 +21,23 @@ const BODY_FONT = '"Helvetica Neue", Arial, sans-serif';
 
 const inputStyle: React.CSSProperties = {
   width: "100%",
-  padding: "clamp(10px, 1.2vw, 16px) clamp(18px, 2vw, 28px)",
+  padding: "clamp(8px, 1.8vh, 16px) clamp(16px, 2vw, 28px)",
   borderRadius: "110px",
   border: "none",
   backgroundColor: INPUT_BG,
   color: ORANGE,
   fontFamily: BODY_FONT,
   fontWeight: 700,
-  fontSize: "clamp(13px, 1.3vw, 16px)",
+  fontSize: "clamp(12px, 1.6vh, 16px)",
   outline: "none",
 };
 
 const labelStyle: React.CSSProperties = {
   display: "block",
   fontFamily: LABEL_FONT,
-  fontSize: "clamp(15px, 1.5vw, 20px)",
+  fontSize: "clamp(13px, 1.7vh, 20px)",
   color: WHITE,
-  marginBottom: "6px",
+  marginBottom: "clamp(3px, 0.5vh, 7px)",
 };
 
 export default function WaitlistForm() {
@@ -154,7 +154,7 @@ export default function WaitlistForm() {
         style={{ width: "min(480px, 90vw)", display: "flex", flexDirection: "column", gap: 0 }}
       >
         {/* Name */}
-        <div style={{ marginBottom: "20px" }}>
+        <div style={{ marginBottom: "clamp(8px, 1.5vh, 20px)" }}>
           <label style={labelStyle}>Name</label>
           <input
             type="text"
@@ -171,7 +171,7 @@ export default function WaitlistForm() {
         </div>
 
         {/* Phone */}
-        <div style={{ marginBottom: "20px" }}>
+        <div style={{ marginBottom: "clamp(8px, 1.5vh, 20px)" }}>
           <label style={labelStyle}>Phone number</label>
           <input
             type="tel"
@@ -187,7 +187,7 @@ export default function WaitlistForm() {
         </div>
 
         {/* Instagram */}
-        <div style={{ marginBottom: "28px" }}>
+        <div style={{ marginBottom: "clamp(10px, 2vh, 28px)" }}>
           <label style={labelStyle}>Instagram Username</label>
           <input
             type="text"
@@ -226,8 +226,8 @@ export default function WaitlistForm() {
             backgroundColor: ORANGE,
             color: WHITE,
             fontFamily: LABEL_FONT,
-            fontSize: "20px",
-            padding: "16px 40px",
+            fontSize: "clamp(15px, 1.8vh, 22px)",
+            padding: "clamp(10px, 1.6vh, 18px) clamp(28px, 3vw, 44px)",
             borderRadius: "110px",
             border: "none",
             cursor: isLoading ? "not-allowed" : "pointer",
